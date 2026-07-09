@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { db } from '../firebase'; 
-=======
-import { db } from '../firebase';
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
 import { collection, getDocs, doc, updateDoc, addDoc, setDoc, getDoc } from "firebase/firestore";
 import { theme } from '../styles/theme';
 import Popup from './Popup';
@@ -31,11 +27,7 @@ function SystemSettings() {
     setServices(serviceSnap.docs.map(d => ({ ...d.data(), id: d.id })));
 
     // 2. ดึงข้อมูล Point Settings (ดึง ID คงที่ 'config_01')
-<<<<<<< HEAD
     const pointDocRef = doc(db, "Point_Settings", "config_01");
-=======
-    const pointDocRef = doc(db, "point_configs", "config_01");
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
     const pointSnap = await getDoc(pointDocRef);
     
     if (pointSnap.exists()) {
@@ -72,11 +64,7 @@ function SystemSettings() {
 
   // --- Point Handlers ---
   const savePointRule = async (pointType) => {
-<<<<<<< HEAD
     const pointDocRef = doc(db, "Point_Settings", "config_01");
-=======
-    const pointDocRef = doc(db, "point_configs", "config_01");
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
     let updateData = {};
 
     if (pointType === 'earn') {
@@ -110,15 +98,9 @@ function SystemSettings() {
         if (type === 'service') {
           await updateDoc(doc(db, "service_settings", id), { Is_Active: !currentStatus });
         } else if (type === 'earn') {
-<<<<<<< HEAD
           await updateDoc(doc(db, "Point_Settings", id), { Earning_Is_Active: !currentStatus });
         } else if (type === 'redeem') {
           await updateDoc(doc(db, "Point_Settings", id), { Redemption_Is_Active: !currentStatus });
-=======
-          await updateDoc(doc(db, "point_configs", id), { Earning_Is_Active: !currentStatus });
-        } else if (type === 'redeem') {
-          await updateDoc(doc(db, "point_configs", id), { Redemption_Is_Active: !currentStatus });
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
         }
         setModal({ ...modal, isOpen: false });
         fetchData();
@@ -128,20 +110,12 @@ function SystemSettings() {
 
   return (
     <div className={s.card}>
-<<<<<<< HEAD
       <h2 className={s.title}>ตั้งค่าระบบบริหารจัดการ</h2>
-=======
-      <h2 className={s.title}>⚙️ ตั้งค่าระบบบริหารจัดการ (D3)</h2>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
 
       <div className={s.sectionWrapper}>
         {/* บริการ Section */}
         <div className={s.settingGroup}>
-<<<<<<< HEAD
           <h3 className="text-lg font-black text-slate-700 mb-6 flex items-center gap-2">รายการค่าบริการ</h3>
-=======
-          <h3 className="text-lg font-black text-slate-700 mb-6 flex items-center gap-2">💰 รายการค่าบริการ</h3>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
           
           <div className="flex gap-2 mb-8">
             <input placeholder="ชื่อบริการ..." value={newService.Service_Name} onChange={(e)=>setNewService({...newService, Service_Name: e.target.value})} className={s.input + " !py-3 text-base"} />
@@ -177,19 +151,11 @@ function SystemSettings() {
 
         {/* เกณฑ์แต้ม Section */}
         <div className={s.settingGroup}>
-<<<<<<< HEAD
           <h3 className="text-lg font-black text-slate-700 mb-6">กำหนดเกณฑ์แต้ม</h3>
           
           {/* สะสมแต้ม */}
           <div className={`p-8 rounded-[3rem] mb-6 border-2 ${!pointSettings?.Earning_Is_Active ? 'bg-slate-50 grayscale' : 'bg-white border-emerald-50'}`}>
             <label className={s.inputLabel}>ได้รับแต้ม (สะสม)</label>
-=======
-          <h3 className="text-lg font-black text-slate-700 mb-6">🌟 กำหนดเกณฑ์แต้ม</h3>
-          
-          {/* สะสมแต้ม */}
-          <div className={`p-8 rounded-[3rem] mb-6 border-2 ${!pointSettings?.Earning_Is_Active ? 'bg-slate-50 grayscale' : 'bg-white border-emerald-50'}`}>
-            <label className={s.inputLabel}>📈 ได้รับแต้ม (สะสม)</label>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
             <div className="flex items-center gap-4">
               <input type="number" placeholder="บาท" value={tempEarn.baht} onChange={(e)=>setTempEarn({...tempEarn, baht: e.target.value})} className={s.input + " !py-3 text-center text-lg"} />
               <span className="font-black text-slate-300">➔</span>
@@ -208,11 +174,7 @@ function SystemSettings() {
 
           {/* แลกส่วนลด */}
           <div className={`p-8 rounded-[3rem] border-2 ${!pointSettings?.Redemption_Is_Active ? 'bg-slate-50 grayscale' : 'bg-white border-emerald-50'}`}>
-<<<<<<< HEAD
             <label className={s.inputLabel}>แลกส่วนลด (Redeem)</label>
-=======
-            <label className={s.inputLabel}>📉 แลกส่วนลด (Redeem)</label>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
             <div className="flex items-center gap-4">
               <input type="number" placeholder="แต้ม" value={tempRedeem.points} onChange={(e)=>setTempRedeem({...tempRedeem, points: e.target.value})} className={s.input + " !py-3 text-center text-lg"} />
               <span className="font-black text-slate-300">➔</span>
@@ -235,7 +197,6 @@ function SystemSettings() {
       {isEditServiceOpen && (
         <div className={m.overlay}>
           <div className={m.card + " !max-w-md !p-10"}>
-<<<<<<< HEAD
             <h3 className={m.title}>แก้ไขค่าบริการ</h3>
             <div className="space-y-6 mb-10 text-left">
               <div>
@@ -249,17 +210,6 @@ function SystemSettings() {
                 <div className="mt-1">
                   <input type="number" value={editServiceData.Price_Rate} onChange={(e) => setEditServiceData({...editServiceData, Price_Rate: e.target.value})} className={s.input + " !py-3"} />
                 </div>
-=======
-            <h3 className={m.title}>📝 แก้ไขค่าบริการ</h3>
-            <div className="space-y-6 mb-10 text-left">
-              <div>
-                <label className={s.inputLabel}>ชื่อรายการ</label>
-                <input value={editServiceData.Service_Name} onChange={(e) => setEditServiceData({...editServiceData, Service_Name: e.target.value})} className={s.input + " !py-3"} />
-              </div>
-              <div>
-                <label className={s.inputLabel}>ราคา (บาท)</label>
-                <input type="number" value={editServiceData.Price_Rate} onChange={(e) => setEditServiceData({...editServiceData, Price_Rate: e.target.value})} className={s.input + " !py-3"} />
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
               </div>
             </div>
             <div className="flex flex-col gap-3">

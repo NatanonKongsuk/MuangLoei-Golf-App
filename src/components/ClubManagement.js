@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-<<<<<<< HEAD
+
 // เพิ่ม query และ where เพื่อคัดกรองประวัติการเช่าไม้ตามวันที่เลือกดู
 import { collection, getDocs, doc, updateDoc, addDoc, query, where } from "firebase/firestore";
-=======
+
 import { collection, getDocs, doc, updateDoc, addDoc } from "firebase/firestore";
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
+
 import { theme } from '../styles/theme';
 import Popup from './Popup';
 
 function ClubManagement() {
-<<<<<<< HEAD
   // เพิ่ม State เลือกวันที่สำหรับดูสถานะคลัง (เริ่มต้นที่วันที่ปัจจุบัน)
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
@@ -22,12 +21,6 @@ function ClubManagement() {
   const [clubs, setClubs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   
-=======
-  const [clubs, setClubs] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  
-  // ปรับ State ให้ตรงตาม ER: Club_Name, Quantity_Total, Quantity_Avail
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newClub, setNewClub] = useState({ Club_Name: '', Quantity_Total: 0 });
 
@@ -40,7 +33,6 @@ function ClubManagement() {
   const s = theme.admin;
   const m = theme.modal;
 
-<<<<<<< HEAD
   // ปรับปรุงฟังก์ชันการโหลดและคำนวณจำนวนไม้กอล์ฟว่างให้ผันแปรตามวันที่เลือก
   const fetchClubsAndCalculateAvail = async () => {
     try {
@@ -92,16 +84,6 @@ function ClubManagement() {
     fetchClubsAndCalculateAvail(); 
   }, [selectedDate]);
 
-=======
-  const fetchClubs = async () => {
-    const snap = await getDocs(collection(db, "golf_clubs"));
-    setClubs(snap.docs.map(d => ({ ...d.data(), id: d.id })));
-  };
-
-  useEffect(() => { fetchClubs(); }, []);
-
-  // --- จัดการข้อมูลตามโครงสร้างใหม่ ---
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
   const handleAddClub = async () => {
     if (!newClub.Club_Name) return;
     try {
@@ -109,21 +91,13 @@ function ClubManagement() {
       await addDoc(collection(db, "golf_clubs"), {
         Club_Name: newClub.Club_Name,
         Quantity_Total: total,
-<<<<<<< HEAD
         Quantity_Avail: total, 
-=======
-        Quantity_Avail: total, // เริ่มต้นจำนวนที่ใช้ได้เท่ากับจำนวนทั้งหมด
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
         Is_Active: true,
         createdAt: new Date()
       });
       setNewClub({ Club_Name: '', Quantity_Total: 0 });
       setIsAddModalOpen(false);
-<<<<<<< HEAD
       fetchClubsAndCalculateAvail();
-=======
-      fetchClubs();
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
     } catch (err) {
       console.error("Error adding club:", err);
     }
@@ -134,19 +108,10 @@ function ClubManagement() {
       const total = Number(editData.Quantity_Total);
       await updateDoc(doc(db, "golf_clubs", editingId), { 
         Club_Name: editData.Club_Name, 
-<<<<<<< HEAD
         Quantity_Total: total
       });
       setIsEditModalOpen(false);
       fetchClubsAndCalculateAvail();
-=======
-        Quantity_Total: total,
-        // หมายเหตุ: Quantity_Avail ปกติจะคำนวณจาก (Total - จำนวนที่ถูกเช่าอยู่)
-        Quantity_Avail: total 
-      });
-      setIsEditModalOpen(false);
-      fetchClubs();
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
     } catch (err) {
       console.error("Error updating club:", err);
     }
@@ -155,11 +120,7 @@ function ClubManagement() {
   const toggleStatus = async (id, currentStatus) => {
     await updateDoc(doc(db, "golf_clubs", id), { Is_Active: !currentStatus });
     setModal({ ...modal, isOpen: false });
-<<<<<<< HEAD
     fetchClubsAndCalculateAvail();
-=======
-    fetchClubs();
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
   };
 
   const filteredClubs = clubs.filter(c => 
@@ -168,7 +129,6 @@ function ClubManagement() {
 
   return (
     <div className={s.card}>
-<<<<<<< HEAD
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
         <div>
           <h2 className={s.title + " !mb-0"}>จัดการคลังไม้กอล์ฟ (Admin)</h2>
@@ -199,20 +159,6 @@ function ClubManagement() {
 
       <div className={s.searchWrapper}>
         <span className={s.searchIcon}></span>
-=======
-      <div className="flex justify-between items-center mb-10">
-        <h2 className={s.title + " !mb-0"}>⛳ จัดการคลังไม้กอล์ฟ (Admin)</h2>
-        <button 
-          onClick={() => setIsAddModalOpen(true)} 
-          className={s.btnEmerald + " !py-3 !px-6 text-sm"}
-        >
-          ➕ เพิ่มไม้กอล์ฟใหม่
-        </button>
-      </div>
-
-      <div className={s.searchWrapper}>
-        <span className={s.searchIcon}>🔍</span>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
         <input 
           placeholder="ค้นหาชื่อไม้กอล์ฟ..." 
           className={s.searchInput}
@@ -226,11 +172,7 @@ function ClubManagement() {
           <div key={club.id} className={club.Is_Active === false ? s.itemCardDisabled : s.itemCard}>
             <div className="flex items-center gap-6 flex-1 text-left">
               <div className={`w-14 h-14 rounded-3xl flex items-center justify-center text-2xl ${club.Is_Active === false ? 'bg-slate-200' : 'bg-emerald-50'}`}>
-<<<<<<< HEAD
                 
-=======
-                ⛳
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
               </div>
               <div className="flex flex-col">
                 <span className={`font-black text-lg ${club.Is_Active === false ? 'text-slate-400' : 'text-slate-800'}`}>{club.Club_Name}</span>
@@ -238,13 +180,8 @@ function ClubManagement() {
                   <span className="text-[15px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg w-fit">
                     ทั้งหมด: {club.Quantity_Total}
                   </span>
-<<<<<<< HEAD
                   <span className={`text-[15px] font-black px-2 py-0.5 rounded-lg w-fit ${club.Quantity_Avail === 0 ? 'text-rose-600 bg-rose-50' : 'text-blue-600 bg-blue-50'}`}>
                     ว่างประจำวันนี้: {club.Quantity_Avail}
-=======
-                  <span className="text-[15px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg w-fit">
-                    ว่าง: {club.Quantity_Avail}
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
                   </span>
                 </div>
               </div>
@@ -272,10 +209,7 @@ function ClubManagement() {
             </div>
           </div>
         ))}
-<<<<<<< HEAD
         {filteredClubs.length === 0 && <p className="text-slate-400 font-bold italic py-4">ไม่พบข้อมูลรายการไม้กอล์ฟที่ค้นหา</p>}
-=======
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
       </div>
 
       {/* Popup สำหรับเพิ่มไม้ */}
@@ -315,11 +249,7 @@ function ClubManagement() {
       {isEditModalOpen && (
         <div className={m.overlay}>
           <div className={m.card + " !max-w-sm"}>
-<<<<<<< HEAD
             <h3 className={m.title}>แก้ไขข้อมูล</h3>
-=======
-            <h3 className={m.title}>📝 แก้ไขข้อมูล</h3>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
             <div className="space-y-5 mb-8 text-left">
               <div>
                 <label className={s.inputLabel}>ชื่อไม้กอล์ฟ</label>

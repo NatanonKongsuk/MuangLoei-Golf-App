@@ -6,19 +6,11 @@ import {
   sendPasswordResetEmail 
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-<<<<<<< HEAD
 import { theme } from '../styles/theme'; // นำ ACCESS_KEYS ออกเนื่องจากไม่ได้ใช้แล้ว
-=======
-import { theme, ACCESS_KEYS } from '../styles/theme';
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
 
 function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-<<<<<<< HEAD
-=======
-  const [accessKey, setAccessKey] = useState('');
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
   const [mode, setMode] = useState('login'); // ควบคุมโหมด: login, register, forgot
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +33,6 @@ function Auth() {
           return;
         }
       } else if (mode === 'register') {
-<<<<<<< HEAD
         // 💡 เปลี่ยนตรงนี้: บังคับให้ทุกคนที่สมัครใหม่มีสิทธิ์เป็น 'customer' ทั้งหมด
         const role = 'customer'; 
 
@@ -58,27 +49,6 @@ function Auth() {
         alert(`ลงทะเบียนสมัครสมาชิกสำเร็จแล้วครับ!`);
       }
     } catch (err) {
-=======
-        // ตรวจสอบสิทธิ์ด้วย Secret Key
-        let role = 'CUSTOMER';
-        if (accessKey === ACCESS_KEYS.OWNER_KEY) role = 'OWNER';
-        else if (accessKey === ACCESS_KEYS.STAFF_KEY) role = 'STAFF';
-
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        
-        // บันทึกข้อมูลเริ่มต้นลง Firestore
-        await setDoc(doc(db, "users", userCred.user.uid), {
-          uid: userCred.user.uid,
-          email,
-          role,
-          isActive: true,
-          createdAt: new Date()
-        });
-        alert(`ลงทะเบียนสำเร็จ! สิทธิ์ของคุณคือ: ${role}`);
-      }
-    } catch (err) {
-      // แจ้งเตือนเมื่อข้อมูลผิดพลาด
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
       alert("เกิดข้อผิดพลาด: " + err.message);
     } finally {
       setLoading(false);
@@ -98,10 +68,6 @@ function Auth() {
     <div className={s.wrapper}>
       <div className={s.card}>
         <div className={s.header}>
-<<<<<<< HEAD
-=======
-          {/* ปรับหัวข้อตามโหมดที่เลือก */}
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
           <h2 className={s.title}>
             {mode === 'forgot' ? 'RESET PASSWORD' : mode === 'register' ? 'REGISTER' : 'LOGIN'}
           </h2>
@@ -131,20 +97,7 @@ function Auth() {
             />
           )}
 
-<<<<<<< HEAD
           {/* 💡 ช่องกรอก Secret Access Key เดิมถูกถอดออกแล้ว เพื่อให้สมัครเป็นลูกค้าได้ปกติทันที */}
-=======
-          {mode === 'register' && (
-            <input 
-              type="password" 
-              value={accessKey} 
-              onChange={(e)=>setAccessKey(e.target.value)} 
-              className={s.input + " border-emerald-100 bg-emerald-50/30"} 
-              placeholder="Secret Access Key" 
-              required
-            />
-          )}
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
 
           <button 
             type="submit" 
@@ -157,14 +110,10 @@ function Auth() {
 
         <div className="mt-8 flex flex-col gap-3 items-center">
           <button 
-<<<<<<< HEAD
             type="button" // เปลี่ยนเป็นประเภท button ป้องกันการสั่ง submit ฟอร์มซ้ำ
             onClick={() => {
               setMode(mode === 'login' ? 'register' : 'login');
             }}
-=======
-            onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
             className="text-sm font-black text-emerald-600 hover:text-emerald-700 transition-colors"
           >
             {mode === 'login' ? 'สมัครสมาชิกใหม่' : 'กลับไปหน้าเข้าสู่ระบบ'}
@@ -172,10 +121,7 @@ function Auth() {
           
           {mode === 'login' && (
             <button 
-<<<<<<< HEAD
               type="button"
-=======
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
               onClick={() => setMode('forgot')} 
               className="text-xs font-bold text-slate-400 hover:text-slate-600"
             >

@@ -20,7 +20,6 @@ function StaffManagement() {
   const s = theme.admin;
   const m = theme.modal; 
 
-<<<<<<< HEAD
   // 🟢 แก้ไขจุดที่ 1: กรองรายชื่อไม่ให้ข้อมูลฝั่ง 'customer' หลุดเข้ามาโชว์ในหน้านี้
   const fetchStaff = async () => {
     try {
@@ -38,11 +37,6 @@ function StaffManagement() {
     } catch (error) {
       console.error("Error fetching staff:", error);
     }
-=======
-  const fetchStaff = async () => {
-    const snap = await getDocs(collection(db, "users"));
-    setStaffs(snap.docs.map(d => ({ ...d.data(), id: d.id })));
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
   };
 
   useEffect(() => { fetchStaff(); }, []);
@@ -64,21 +58,14 @@ function StaffManagement() {
       const user = userCredential.user;
 
       // 2. บันทึกข้อมูลลง Firestore โดยใช้ UID จาก Auth เป็น Document ID
-<<<<<<< HEAD
       // 🟢 แก้ไขจุดที่ 2: เปลี่ยนจาก 'STAFF' (ตัวพิมพ์ใหญ่) เป็น 'staff' (ตัวพิมพ์เล็ก) ให้ตรงกับมาตรฐานระบบ
-=======
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         fullName: newStaff.fullName,
         email: newStaff.email,
         phone: newStaff.phone,
         password: newStaff.password, // เก็บไว้เพื่อให้ Admin ดูหรือแก้ไขได้ง่าย
-<<<<<<< HEAD
         role: 'staff', 
-=======
-        role: 'STAFF',
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
         isActive: true,
         joinDate: new Date()
       });
@@ -111,21 +98,11 @@ function StaffManagement() {
   };
 
   return (
-<<<<<<< HEAD
     <div className={s.card}>
       <div className="flex justify-between items-center mb-10">
         <h2 className={s.title + " !mb-0"}>จัดการข้อมูลพนักงาน</h2>
         <button onClick={() => setIsAddModalOpen(true)} className={s.btnEmerald + " !py-3 !px-6 text-sm"}>
           เพิ่มพนักงานใหม่
-=======
-    // ... ส่วน JSX ของคุณคงเดิม ...
-    <div className={s.card}>
-      {/* ... โค้ดส่วนแสดงผลของคุณที่ส่งมา ... */}
-      <div className="flex justify-between items-center mb-10">
-        <h2 className={s.title + " !mb-0"}>👥 จัดการข้อมูลพนักงาน</h2>
-        <button onClick={() => setIsAddModalOpen(true)} className={s.btnEmerald + " !py-3 !px-6 text-sm"}>
-          ➕ เพิ่มพนักงานใหม่
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
         </button>
       </div>
 
@@ -183,20 +160,11 @@ function StaffManagement() {
         })}
       </div>
 
-<<<<<<< HEAD
       {/* Popups สำหรับแก้ไขและเพิ่ม */}
       {isEditModalOpen && (
         <div className={m.overlay}>
           <div className={m.card + " !max-w-lg"}>
             <h3 className={m.title}>แก้ไขข้อมูลพนักงาน</h3>
-=======
-      {/* Popups สำหรับแก้ไขและเพิ่ม (ใช้ handleAddStaff ที่อัปเดตแล้ว) */}
-      {/* ... ส่วน Popup ของคุณคงเดิม ... */}
-      {isEditModalOpen && (
-        <div className={m.overlay}>
-          <div className={m.card + " !max-w-lg"}>
-            <h3 className={m.title}>📝 แก้ไขข้อมูลพนักงาน</h3>
->>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
             <div className="space-y-4 mb-8 text-left">
               <div>
                 <label className={s.inputLabel}>ชื่อจริง-นามสกุล</label>
