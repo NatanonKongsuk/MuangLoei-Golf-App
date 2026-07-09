@@ -5,7 +5,10 @@ import { doc, getDoc } from "firebase/firestore"; // สำหรับดึง
 import Auth from './components/Auth';
 import Checkout from './components/Checkout';
 import OwnerDashboard from './components/OwnerDashboard'; // นำเข้า Dashboard ของเจ้าของ
+<<<<<<< HEAD
 import PaymentManager from './components/PaymentManager';
+=======
+>>>>>>> b3d2be7e844e9327d022a994c2815786d77bdbfe
 
 function App() {
   const [user, setUser] = useState(null);
